@@ -1,8 +1,9 @@
 import express, {Express} from "express";
-import {ChatServer} from "./setupServer";
-import dbConnection from "./stupDb"
-import {config} from "./config";
-import applicationRoutes from "./routes"
+import dbConnection from "@root/stupDb"
+import applicationRoutes from "@root/routes"
+import {config} from "@root/config";
+import {ChatServer} from "@root/setupServer";
+
 class Application {
     public initialize(): void {
         dbConnection();
@@ -14,6 +15,7 @@ class Application {
     }
     private loadingConfig(): void {
         config.validateConfig();
+        config.cloudinaryConfig();
     }
 }
 

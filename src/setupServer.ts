@@ -6,16 +6,19 @@ import helmet from "helmet";
 import hpp from "hpp";
 import cors from "cors";
 import compression from "compression";
-import {config} from "./config";
 import {Server} from "socket.io";
 import {createClient} from "redis";
 import {createAdapter} from "@socket.io/redis-adapter";
 import * as process from "process";
 import HTTP_STATUS from "http-status-codes";
-import {CustomError, IErrorResponse} from "./shared/globals/helper/error-handler";
 import Logger from "bunyan";
+import {CustomError, IErrorResponse} from "@global/helper/error-handler";
+import {config} from "@root/config";
+//import applicationRoutes from '@root/routes'
+
 const SERVER_PORT = 5000;
-const log:Logger = config.createLogger('server')
+const log: Logger = config.createLogger('server')
+
 export class ChatServer {
     private readonly app: Application;
 
@@ -60,7 +63,7 @@ export class ChatServer {
         }))
     }
 
-    private routesMiddleware(app: Application): void {
+    private routesMiddleware(_app: Application): void {
     }
 
     private globalErrorHandler(app: Application): void {
@@ -68,7 +71,7 @@ export class ChatServer {
             (req: Request, res: Response) => {
                 res.status(HTTP_STATUS.NOT_FOUND).json({message: `${req.originalUrl} not found !!!!`})
             });
-        app.use((error: IErrorResponse, req: Request, res: Response, next: NextFunction) => {
+        app.use((error: IErrorResponse, _req: Request, res: Response, next: NextFunction) => {
             console.log(error)
             if (error instanceof CustomError) {
                 return res.status(error.statusCode).json(error.serializeError())
@@ -113,7 +116,7 @@ export class ChatServer {
         })
     }
 
-    private socketIOConnections(io: Server): void {
-
+    private socketIOConnections(_io: Server): void {
+        log.info('sockets connections')
     }
 }

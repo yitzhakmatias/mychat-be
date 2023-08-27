@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import * as process from "process";
-import {config} from "./config";
 import Logger from "bunyan";
+import {config} from "@root/config";
 const log:Logger = config.createLogger('setupDataBase')
 export default ()=>{
     const connect = ()=>{
