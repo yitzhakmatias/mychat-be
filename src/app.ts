@@ -9,6 +9,7 @@ class Application {
         dbConnection();
         this.loadingConfig();
         const app: Express = express();
+        app.use(express.json())
         applicationRoutes(app);
         const server: ChatServer = new ChatServer(app);
         server.start();

@@ -14,7 +14,7 @@ import HTTP_STATUS from "http-status-codes";
 import Logger from "bunyan";
 import {CustomError, IErrorResponse} from "@global/helper/error-handler";
 import {config} from "@root/config";
-//import applicationRoutes from '@root/routes'
+import applicationRoutes from '@root/routes'
 
 const SERVER_PORT = 5000;
 const log: Logger = config.createLogger('server')
@@ -46,7 +46,7 @@ export class ChatServer {
         app.use(helmet())
         //!important
         app.use(cors({
-            origin: config.CLIENT_URL,
+            origin: '*',//config.CLIENT_URL | '*',
             credentials: true,
             optionsSuccessStatus: 200,
             methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
@@ -63,7 +63,8 @@ export class ChatServer {
         }))
     }
 
-    private routesMiddleware(_app: Application): void {
+    private routesMiddleware(app: Application): void {
+        applicationRoutes(app)
     }
 
     private globalErrorHandler(app: Application): void {
@@ -72,7 +73,7 @@ export class ChatServer {
                 res.status(HTTP_STATUS.NOT_FOUND).json({message: `${req.originalUrl} not found !!!!`})
             });
         app.use((error: IErrorResponse, _req: Request, res: Response, next: NextFunction) => {
-            console.log(error)
+            log.error(error)
             if (error instanceof CustomError) {
                 return res.status(error.statusCode).json(error.serializeError())
             }

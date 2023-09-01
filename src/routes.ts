@@ -1,8 +1,10 @@
 import {Application} from "express";
+import {authRoutes} from "@auth/routes/authRoutes";
 
-export default (_app: Application) => {
+const BASE_API = '/api/v1'
+export default (app: Application) => {
     const routes = () => {
-        //app.use('api')
+        app.use(BASE_API, authRoutes.routers())
     }
     routes();
 }

@@ -137,6 +137,9 @@
       "@worker/*": [
         "src/shared/workers/*"
       ],
+      "@auth/*": [
+        "src/features/auth/*"
+      ],
       "@root/*": [
         "src/*"
       ]
