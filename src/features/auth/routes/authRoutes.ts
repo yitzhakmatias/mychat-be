@@ -11,7 +11,7 @@ class AuthRoutes {
     }
 
     public routers(): Router {
-        this.router.post('/signpepe', (
+        this.router.get('/sign', (
             req, res) => {
 
             log.info(req.body)

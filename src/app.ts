@@ -1,16 +1,16 @@
 import express, {Express} from "express";
-import dbConnection from "@root/stupDb"
-import applicationRoutes from "@root/routes"
+import dbConnection from "@root/setupDb"
+//import applicationRoutes from "@root/routes"
 import {config} from "@root/config";
 import {ChatServer} from "@root/setupServer";
 
 class Application {
     public initialize(): void {
-        dbConnection();
         this.loadingConfig();
+        dbConnection();
         const app: Express = express();
         app.use(express.json())
-        applicationRoutes(app);
+        //applicationRoutes(app);
         const server: ChatServer = new ChatServer(app);
         server.start();
     }
